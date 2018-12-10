@@ -1,4 +1,6 @@
 ## Installation
+Install iptables,ipset
+
 Edit settings for iptables like in example-iptables file:
 ```
 -A INPUT -p tcp -m tcp -j LOG --log-prefix "Iptables: unidentified: "
@@ -11,3 +13,17 @@ wget --no-check-certificate -O /etc/fail2ban/filter.d/scanban-filter.conf https:
 wget --no-check-certificate -O /etc/fail2ban/jail.d/scanban-jail.conf https://raw.githubusercontent.com/AndrewMarchukov/Fail2ban-defence-nmap-and-botnet-scanning/master/scanban-jail.conf
 ```
 and restart rsyslog, wait logs in /var/log/iptables.log then restart fail2ban
+
+look blocked ip "ipset -L f2b-scanban"
+
+## Tips and Tricks
+Edit jail.conf:
+```
+[recidive]
+enabled = true
+logpath  = /var/log/fail2ban.log
+banaction = iptables-ipset-proto6-allports
+bantime  = 2592000
+findtime = 86400   ; 1 day
+maxretry = 3
+```
