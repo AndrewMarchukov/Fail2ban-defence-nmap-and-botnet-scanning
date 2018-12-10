@@ -1,0 +1,12 @@
+-A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+-A INPUT -s 192.168.1.0/24 -i eth -m conntrack --ctstate NEW -j ACCEPT
+-A INPUT -i lo -j ACCEPT
+-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,ACK SYN -m conntrack --ctstate NEW -m multiport --dports 22,5555 -j ACCEPT
+-A INPUT -p udp -m conntrack --ctstate NEW -m multiport --dports 6668, 1111 -j ACCEPT
+-A INPUT -p icmp -m icmp --icmp-type 3 -m conntrack --ctstate NEW -m connlimit --connlimit-upto 2 --connlimit-mask 32 --connlimit-saddr -j ACCEPT
+-A INPUT -p icmp -m icmp --icmp-type 8 -m conntrack --ctstate NEW -m limit --limit 1/sec --limit-burst 2 -j ACCEPT
+-A INPUT -p icmp -m icmp --icmp-type 12 -m conntrack --ctstate NEW -m connlimit --connlimit-upto 2 --connlimit-mask 32 --connlimit-saddr -j ACCEPT
+-A INPUT -s 192.168.1.0/24 -i eth -p tcp -j REJECT --reject-with tcp-reset
+-A INPUT -s 192.168.1.0/24 -i eth -p udp -j REJECT --reject-with icmp-port-unreachable
+-A INPUT -s 192.168.1.0/24 -i eth -j REJECT --reject-with icmp-proto-unreachable
+-A INPUT -p tcp -m tcp -j LOG --log-prefix "Iptables: unidentified: "
