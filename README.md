@@ -1,4 +1,4 @@
-Preventing, blocking, baning bots crawling by ports in iptables
+Preventing, blocking, baning bots crawling and nmap scanning by ports in iptables
 
 ## Installation
 
