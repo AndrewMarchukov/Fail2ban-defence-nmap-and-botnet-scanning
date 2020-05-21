@@ -1,5 +1,8 @@
+Preventing, blocking, baning bots crawling by ports in iptables
+
 ## Installation
-Install iptables,ipset
+
+Install iptables, ipset
 
 Edit settings for iptables like in example-iptables file:
 ```
